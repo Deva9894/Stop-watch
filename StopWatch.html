@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>StopWatch</title>
+	<link rel="stylesheet" type="text/css" href="MDB/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="MDB/css/mdb.css">
+</head>
+<body>
+	<div class="row mt-5">
+		<div class="col-md-5 m-auto">
+			<div class="card">
+				<div class="card-header bg-success text-center ">
+					<h1>JS STOPWATCH</h1>
+				</div>
+				<div class="card-body bg-light text-center" id="time">
+					00:00:00
+				</div>
+				<div class="card-footer btn bg-warning text-center">
+					<button id="start">Start</button>
+					<button id="stop">Stop</button>
+					<button id="reseat">Reseat</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Script Code -->
+	<script>
+		let timeTag=document.getElementById('time');
+		let startBtn=document.getElementById('start');
+		let stopBtn=document.getElementById('stop');
+		let reseatBtn=document.getElementById('reseat');
+
+		let seconds=0;
+		let interval=null;
+
+
+
+		startBtn.addEventListener('click',start);
+		stopBtn.addEventListener('click',stop);
+		reseatBtn.addEventListener('click',reset);
+
+		function timer()
+		{
+			seconds++;
+			let hours=Math.floor(seconds/3600);
+			let minutes=Math.floor((seconds - (hours*3600))/60);
+			let sec=seconds%60;
+
+			if(sec<10) sec='0'+sec;
+			if(minutes<10) minutes='0'+minutes;
+			if(hours<10) hours='0'+hours;
+
+			timeTag.innerText=`${hours}:${minutes}:${sec}`;
+
+		}
+
+		function start()
+		{
+			if(interval)
+			{
+				return;
+			}
+			interval=setInterval(timer,1000);
+		}
+
+		function stop()
+		{
+			clearInterval(interval);
+			interval=null;
+		}
+
+		function reset()
+		{
+			stop();
+			seconds=0;
+			timeTag.innerText='00:00:00';
+		}
+	</script>
+</body>
+</html>
